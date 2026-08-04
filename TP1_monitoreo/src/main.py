@@ -24,6 +24,7 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import display
 import recolector
 import senales
+from analizadores.base import INTERVALOS_MINIMOS
 from analizadores import resumen, memoria, fds, threads as vt_threads
 from analizadores import senales as an_senales
 from analizadores import scheduling, sistema
@@ -82,10 +83,14 @@ def main():
     snapshot = manager.dict()
 
     colas = {v: mp.Queue(maxsize=1) for v in VISTAS}
-    intervalos = {v: mp.Value("d", float(defaults.get(v, 2.0))) for v in VISTAS}
+    # Los intervalos iniciales de config.json también se topean contra el mínimo
+    # de cada vista (tabla del enunciado), no sólo los que se ajustan con +/-.
+    intervalos = {v: mp.Value("d", max(INTERVALOS_MINIMOS.get(v, 0.5),
+                                       float(defaults.get(v, 2.0)))) for v in VISTAS}
     verbose_val = mp.Value("b", 0)
     shutdown_evt = mp.Event()
     repintar_evt = mp.Event()
+    recargar_ui_evt = mp.Event()
     cpu_quick = mp.Array("d", [0.0, 0.0, 0.0, 0.0])
 
     procesos = []
@@ -117,6 +122,9 @@ def main():
         "snapshot": snapshot,
         "config_path": CONFIG_PATH,
         "repintar_evt": repintar_evt,
+        "recargar_ui_evt": recargar_ui_evt,
+        "config": cfg,               # mismo objeto que ve el Display: SIGHUP lo actualiza in place
+        "intervalos_minimos": INTERVALOS_MINIMOS,
         "log": log_a_archivo,
     }
 
@@ -124,7 +132,8 @@ def main():
     t_senales.start()
 
     try:
-        curses.wrapper(display.correr, snapshot, intervalos, verbose_val, shutdown_evt, cfg, repintar_evt)
+        curses.wrapper(display.correr, snapshot, intervalos, verbose_val, shutdown_evt, cfg,
+                       repintar_evt, cpu_quick, recargar_ui_evt)
     except Exception as e:
         log_a_archivo(f"Display terminó con excepción: {e!r}")
     finally:

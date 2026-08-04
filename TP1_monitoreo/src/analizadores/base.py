@@ -16,6 +16,23 @@ import queue
 import signal
 import time
 
+# Intervalo mínimo de refresco por vista, según la tabla del enunciado.
+# Vive acá (y no en display.py) porque es una propiedad del analizador: es el
+# ritmo por debajo del cual leer /proc para esa dimensión sale demasiado caro.
+# El Display lo importa para no dejar bajar el Value por debajo de este piso,
+# y el loop de abajo lo vuelve a aplicar como defensa: aunque alguien escriba
+# un valor menor en el Value (por ejemplo vía SIGHUP con un config.json
+# inconsistente), el analizador nunca corre más rápido que su mínimo.
+INTERVALOS_MINIMOS = {
+    "resumen": 0.5,
+    "memoria": 1.0,
+    "fds": 2.0,
+    "threads": 0.5,
+    "senales": 5.0,
+    "scheduling": 5.0,
+    "sistema": 1.0,
+}
+
 
 def obtener_ultimos_pids(cola, cache):
     """Vacía la cola quedándose con el mensaje más reciente (evita que se acumulen si el analizador es lento)."""
@@ -56,7 +73,7 @@ def correr_analizador(nombre_clave, cola_pids, snapshot, intervalo_val, shutdown
             snapshot[nombre_clave] = {"data": snapshot.get(nombre_clave, {}).get("data", {}),
                                        "ts": time.time(), "error": str(e)}
 
-        intervalo = max(0.1, float(intervalo_val.value))
+        intervalo = max(INTERVALOS_MINIMOS.get(nombre_clave, 0.5), float(intervalo_val.value))
         transcurrido = time.time() - inicio
         espera = max(0.0, intervalo - transcurrido)
         shutdown_evt.wait(espera)

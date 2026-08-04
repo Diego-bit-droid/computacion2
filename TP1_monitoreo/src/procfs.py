@@ -284,6 +284,13 @@ def decodificar_mascara_senales(mascara_hex):
 _POLICIAS = {0: "OTHER", 1: "FIFO", 2: "RR", 3: "BATCH", 5: "IDLE", 6: "DEADLINE"}
 
 
+def nombre_policy(numero):
+    """Traduce el número de política de scheduling (campo 41 de /proc/<pid>/stat) a su nombre."""
+    if numero is None:
+        return None
+    return _POLICIAS.get(numero, f"?{numero}")
+
+
 def leer_policy_sched(pid):
     """Lee la política de scheduling desde /proc/<pid>/sched (línea 'policy'), si está disponible."""
     contenido = _leer(f"/proc/{pid}/sched")
