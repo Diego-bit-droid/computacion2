@@ -1,0 +1,15 @@
+{
+  "intervalos": {
+    "resumen": 2.0,
+    "memoria": 3.0,
+    "fds": 5.0,
+    "threads": 2.0,
+    "senales": 10.0,
+    "scheduling": 10.0,
+    "sistema": 2.0
+  },
+  "intervalo_recolector": 1.0,
+  "orden_default": "cpu",
+  "filtro_cmd_default": "",
+  "filtro_user_default": ""
+}
