@@ -87,19 +87,40 @@ def procesar(contexto):
 
 
 def _recargar_config(contexto):
-    """SIGHUP: relee config.json y aplica intervalos por vista."""
+    """
+    SIGHUP: relee config.json y aplica intervalos por vista Y filtros default,
+    que es lo que pide el enunciado.
+
+    Los intervalos van a los Value compartidos (los leen los analizadores en
+    otros procesos), topeados contra el mínimo de cada vista para que un
+    config.json mal armado no pueda hacer que la vista FDs corra cada 0.1s.
+    Los filtros/orden, en cambio, son estado de la UI: los dejamos en el mismo
+    dict `config` que ya tiene el Display (ambos viven en el proceso principal)
+    y avisamos con un Event para que los reaplique en el próximo frame, en vez
+    de tocar su estado desde este hilo.
+    """
     try:
         with open(contexto["config_path"]) as f:
             cfg = json.load(f)
     except (FileNotFoundError, json.JSONDecodeError) as e:
         contexto["log"](f"SIGHUP: no se pudo recargar config.json ({e})")
         return
+
     intervalos = cfg.get("intervalos", {})
+    minimos = contexto.get("intervalos_minimos", {})
     for vista, val in contexto["intervalos"].items():
         if vista in intervalos:
+            pedido = float(intervalos[vista])
+            efectivo = max(minimos.get(vista, 0.5), pedido)
+            if efectivo != pedido:
+                contexto["log"](f"SIGHUP: '{vista}' pedía {pedido}s, se topea al mínimo {efectivo}s")
             with val.get_lock():
-                val.value = float(intervalos[vista])
-    contexto["log"]("SIGHUP: configuración recargada desde config.json")
+                val.value = efectivo
+
+    contexto["config"].clear()
+    contexto["config"].update(cfg)
+    contexto["recargar_ui_evt"].set()
+    contexto["log"]("SIGHUP: configuración recargada desde config.json (intervalos + filtros default)")
 
 
 def _dump_snapshot(contexto):

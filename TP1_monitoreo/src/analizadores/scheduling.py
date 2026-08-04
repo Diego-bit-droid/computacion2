@@ -13,7 +13,10 @@ def calcular(pids, verbose):
         status = procfs.leer_status(pid)
         if st is None or status is None:
             continue
-        politica = procfs.leer_policy_sched(pid)
+        # El enunciado admite dos fuentes para la política: /proc/<pid>/sched o
+        # el campo 41 de /proc/<pid>/stat. Preferimos sched (más explícito) y
+        # caemos a stat si ese archivo no está disponible en este kernel.
+        politica = procfs.leer_policy_sched(pid) or procfs.nombre_policy(st.get("policy"))
         resultado[pid] = {
             "nice": st["nice"],
             "priority": st["priority"],

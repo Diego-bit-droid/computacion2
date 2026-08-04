@@ -1,0 +1,1578 @@
+{
+  "fds": {
+    "data": {
+      "1": {
+        "total_fds": 41,
+        "fds": [
+          {
+            "fd": "0",
+            "destino": "/dev/pts/0",
+            "tipo": "tty"
+          },
+          {
+            "fd": "1",
+            "destino": "/dev/pts/0",
+            "tipo": "tty"
+          },
+          {
+            "fd": "2",
+            "destino": "/dev/pts/0",
+            "tipo": "tty"
+          },
+          {
+            "fd": "3",
+            "destino": "pipe:[200682]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "4",
+            "destino": "pipe:[200682]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "5",
+            "destino": "pipe:[200677]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "6",
+            "destino": "pipe:[200683]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "7",
+            "destino": "pipe:[200683]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "8",
+            "destino": "pipe:[200678]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "9",
+            "destino": "pipe:[200684]",
+            "tipo": "pipe"
+          }
+        ],
+        "truncado": true
+      },
+      "7": {
+        "total_fds": 17,
+        "fds": [
+          {
+            "fd": "0",
+            "destino": "/dev/pts/0",
+            "tipo": "tty"
+          },
+          {
+            "fd": "1",
+            "destino": "/dev/pts/0",
+            "tipo": "tty"
+          },
+          {
+            "fd": "2",
+            "destino": "/dev/pts/0",
+            "tipo": "tty"
+          },
+          {
+            "fd": "3",
+            "destino": "pipe:[200676]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "4",
+            "destino": "socket:[204663]",
+            "tipo": "socket"
+          },
+          {
+            "fd": "5",
+            "destino": "/dev/null",
+            "tipo": "file"
+          },
+          {
+            "fd": "6",
+            "destino": "pipe:[200677]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "7",
+            "destino": "pipe:[200678]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "8",
+            "destino": "socket:[202552]",
+            "tipo": "socket"
+          },
+          {
+            "fd": "9",
+            "destino": "socket:[204662]",
+            "tipo": "socket"
+          }
+        ],
+        "truncado": true
+      },
+      "12": {
+        "total_fds": 24,
+        "fds": [
+          {
+            "fd": "0",
+            "destino": "/dev/pts/0",
+            "tipo": "tty"
+          },
+          {
+            "fd": "1",
+            "destino": "/dev/pts/0",
+            "tipo": "tty"
+          },
+          {
+            "fd": "2",
+            "destino": "/dev/pts/0",
+            "tipo": "tty"
+          },
+          {
+            "fd": "3",
+            "destino": "pipe:[200682]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "4",
+            "destino": "pipe:[200682]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "5",
+            "destino": "pipe:[200677]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "6",
+            "destino": "pipe:[200683]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "7",
+            "destino": "pipe:[200683]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "8",
+            "destino": "pipe:[200678]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "9",
+            "destino": "pipe:[200684]",
+            "tipo": "pipe"
+          }
+        ],
+        "truncado": true
+      },
+      "13": {
+        "total_fds": 27,
+        "fds": [
+          {
+            "fd": "0",
+            "destino": "/dev/pts/0",
+            "tipo": "tty"
+          },
+          {
+            "fd": "1",
+            "destino": "/dev/pts/0",
+            "tipo": "tty"
+          },
+          {
+            "fd": "2",
+            "destino": "/dev/pts/0",
+            "tipo": "tty"
+          },
+          {
+            "fd": "3",
+            "destino": "pipe:[200682]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "4",
+            "destino": "pipe:[200682]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "5",
+            "destino": "pipe:[200677]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "6",
+            "destino": "pipe:[200683]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "7",
+            "destino": "pipe:[200683]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "8",
+            "destino": "pipe:[200678]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "9",
+            "destino": "pipe:[200684]",
+            "tipo": "pipe"
+          }
+        ],
+        "truncado": true
+      },
+      "15": {
+        "total_fds": 29,
+        "fds": [
+          {
+            "fd": "0",
+            "destino": "/dev/pts/0",
+            "tipo": "tty"
+          },
+          {
+            "fd": "1",
+            "destino": "/dev/pts/0",
+            "tipo": "tty"
+          },
+          {
+            "fd": "2",
+            "destino": "/dev/pts/0",
+            "tipo": "tty"
+          },
+          {
+            "fd": "3",
+            "destino": "pipe:[200682]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "4",
+            "destino": "pipe:[200682]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "5",
+            "destino": "pipe:[200677]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "6",
+            "destino": "pipe:[200683]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "7",
+            "destino": "pipe:[200683]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "8",
+            "destino": "pipe:[200678]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "9",
+            "destino": "pipe:[200684]",
+            "tipo": "pipe"
+          }
+        ],
+        "truncado": true
+      },
+      "17": {
+        "total_fds": 32,
+        "fds": [
+          {
+            "fd": "0",
+            "destino": "/dev/pts/0",
+            "tipo": "tty"
+          },
+          {
+            "fd": "1",
+            "destino": "/dev/pts/0",
+            "tipo": "tty"
+          },
+          {
+            "fd": "2",
+            "destino": "/dev/pts/0",
+            "tipo": "tty"
+          },
+          {
+            "fd": "3",
+            "destino": "pipe:[200682]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "4",
+            "destino": "pipe:[200682]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "5",
+            "destino": "pipe:[200677]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "6",
+            "destino": "pipe:[200683]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "7",
+            "destino": "pipe:[200683]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "8",
+            "destino": "pipe:[200678]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "9",
+            "destino": "pipe:[200684]",
+            "tipo": "pipe"
+          }
+        ],
+        "truncado": true
+      },
+      "21": {
+        "total_fds": 33,
+        "fds": [
+          {
+            "fd": "0",
+            "destino": "/dev/pts/0",
+            "tipo": "tty"
+          },
+          {
+            "fd": "1",
+            "destino": "/dev/pts/0",
+            "tipo": "tty"
+          },
+          {
+            "fd": "2",
+            "destino": "/dev/pts/0",
+            "tipo": "tty"
+          },
+          {
+            "fd": "3",
+            "destino": "pipe:[200682]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "4",
+            "destino": "pipe:[200682]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "5",
+            "destino": "pipe:[200677]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "6",
+            "destino": "pipe:[200683]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "7",
+            "destino": "pipe:[200683]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "8",
+            "destino": "pipe:[200678]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "9",
+            "destino": "pipe:[200684]",
+            "tipo": "pipe"
+          }
+        ],
+        "truncado": true
+      },
+      "26": {
+        "total_fds": 35,
+        "fds": [
+          {
+            "fd": "0",
+            "destino": "/dev/pts/0",
+            "tipo": "tty"
+          },
+          {
+            "fd": "1",
+            "destino": "/dev/pts/0",
+            "tipo": "tty"
+          },
+          {
+            "fd": "2",
+            "destino": "/dev/pts/0",
+            "tipo": "tty"
+          },
+          {
+            "fd": "3",
+            "destino": "pipe:[200682]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "4",
+            "destino": "pipe:[200682]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "5",
+            "destino": "pipe:[200677]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "6",
+            "destino": "pipe:[200683]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "7",
+            "destino": "pipe:[200683]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "8",
+            "destino": "pipe:[200678]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "9",
+            "destino": "pipe:[200684]",
+            "tipo": "pipe"
+          }
+        ],
+        "truncado": true
+      },
+      "31": {
+        "total_fds": 37,
+        "fds": [
+          {
+            "fd": "0",
+            "destino": "/dev/pts/0",
+            "tipo": "tty"
+          },
+          {
+            "fd": "1",
+            "destino": "/dev/pts/0",
+            "tipo": "tty"
+          },
+          {
+            "fd": "2",
+            "destino": "/dev/pts/0",
+            "tipo": "tty"
+          },
+          {
+            "fd": "3",
+            "destino": "pipe:[200682]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "4",
+            "destino": "pipe:[200682]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "5",
+            "destino": "pipe:[200677]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "6",
+            "destino": "pipe:[200683]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "7",
+            "destino": "pipe:[200683]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "8",
+            "destino": "pipe:[200678]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "9",
+            "destino": "pipe:[200684]",
+            "tipo": "pipe"
+          }
+        ],
+        "truncado": true
+      },
+      "33": {
+        "total_fds": 39,
+        "fds": [
+          {
+            "fd": "0",
+            "destino": "/dev/pts/0",
+            "tipo": "tty"
+          },
+          {
+            "fd": "1",
+            "destino": "/dev/pts/0",
+            "tipo": "tty"
+          },
+          {
+            "fd": "2",
+            "destino": "/dev/pts/0",
+            "tipo": "tty"
+          },
+          {
+            "fd": "3",
+            "destino": "pipe:[200682]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "4",
+            "destino": "pipe:[200682]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "5",
+            "destino": "pipe:[200677]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "6",
+            "destino": "pipe:[200683]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "7",
+            "destino": "pipe:[200683]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "8",
+            "destino": "pipe:[200678]",
+            "tipo": "pipe"
+          },
+          {
+            "fd": "9",
+            "destino": "pipe:[200684]",
+            "tipo": "pipe"
+          }
+        ],
+        "truncado": true
+      }
+    },
+    "ts": 1785814296.4176788
+  },
+  "resumen": {
+    "data": {
+      "1": {
+        "pid": 1,
+        "ppid": 0,
+        "uid": 0,
+        "usuario": "root",
+        "gid": 0,
+        "grupo": "root",
+        "estado": "S",
+        "comando": "python3 /app/src/main.py",
+        "comm": "python3",
+        "cpu_pct": 0.5,
+        "threads": 2,
+        "rss_kb": 22856
+      },
+      "7": {
+        "pid": 7,
+        "ppid": 1,
+        "uid": 0,
+        "usuario": "root",
+        "gid": 0,
+        "grupo": "root",
+        "estado": "S",
+        "comando": "python3 /app/src/main.py",
+        "comm": "python3",
+        "cpu_pct": 0.0,
+        "threads": 11,
+        "rss_kb": 16872
+      },
+      "12": {
+        "pid": 12,
+        "ppid": 1,
+        "uid": 0,
+        "usuario": "root",
+        "gid": 0,
+        "grupo": "root",
+        "estado": "S",
+        "comando": "python3 /app/src/main.py",
+        "comm": "python3",
+        "cpu_pct": 0.0,
+        "threads": 8,
+        "rss_kb": 15888
+      },
+      "13": {
+        "pid": 13,
+        "ppid": 1,
+        "uid": 0,
+        "usuario": "root",
+        "gid": 0,
+        "grupo": "root",
+        "estado": "R",
+        "comando": "python3 /app/src/main.py",
+        "comm": "python3",
+        "cpu_pct": 0.0,
+        "threads": 1,
+        "rss_kb": 16408
+      },
+      "15": {
+        "pid": 15,
+        "ppid": 1,
+        "uid": 0,
+        "usuario": "root",
+        "gid": 0,
+        "grupo": "root",
+        "estado": "S",
+        "comando": "python3 /app/src/main.py",
+        "comm": "python3",
+        "cpu_pct": 0.5,
+        "threads": 1,
+        "rss_kb": 15836
+      },
+      "17": {
+        "pid": 17,
+        "ppid": 1,
+        "uid": 0,
+        "usuario": "root",
+        "gid": 0,
+        "grupo": "root",
+        "estado": "S",
+        "comando": "python3 /app/src/main.py",
+        "comm": "python3",
+        "cpu_pct": 0.0,
+        "threads": 1,
+        "rss_kb": 15876
+      },
+      "21": {
+        "pid": 21,
+        "ppid": 1,
+        "uid": 0,
+        "usuario": "root",
+        "gid": 0,
+        "grupo": "root",
+        "estado": "S",
+        "comando": "python3 /app/src/main.py",
+        "comm": "python3",
+        "cpu_pct": 1.0,
+        "threads": 1,
+        "rss_kb": 16156
+      },
+      "26": {
+        "pid": 26,
+        "ppid": 1,
+        "uid": 0,
+        "usuario": "root",
+        "gid": 0,
+        "grupo": "root",
+        "estado": "R",
+        "comando": "python3 /app/src/main.py",
+        "comm": "python3",
+        "cpu_pct": 0.0,
+        "threads": 1,
+        "rss_kb": 15600
+      },
+      "31": {
+        "pid": 31,
+        "ppid": 1,
+        "uid": 0,
+        "usuario": "root",
+        "gid": 0,
+        "grupo": "root",
+        "estado": "R",
+        "comando": "python3 /app/src/main.py",
+        "comm": "python3",
+        "cpu_pct": 0.0,
+        "threads": 1,
+        "rss_kb": 15652
+      },
+      "33": {
+        "pid": 33,
+        "ppid": 1,
+        "uid": 0,
+        "usuario": "root",
+        "gid": 0,
+        "grupo": "root",
+        "estado": "S",
+        "comando": "python3 /app/src/main.py",
+        "comm": "python3",
+        "cpu_pct": 0.5,
+        "threads": 1,
+        "rss_kb": 16012
+      }
+    },
+    "ts": 1785814296.421331
+  },
+  "senales": {
+    "data": {
+      "1": {
+        "bloqueadas": [],
+        "ignoradas": [
+          "SIGPIPE",
+          "SIGXFSZ"
+        ],
+        "con_handler": [
+          "SIGHUP",
+          "SIGINT",
+          "SIGUSR1",
+          "SIGUSR2",
+          "SIGTERM",
+          "SIGTSTP",
+          "SIGWINCH",
+          "RT_33"
+        ],
+        "pendientes_proceso": [],
+        "pendientes_grupo": []
+      },
+      "7": {
+        "bloqueadas": [],
+        "ignoradas": [
+          "SIGINT",
+          "SIGPIPE",
+          "SIGXFSZ"
+        ],
+        "con_handler": [
+          "RT_33"
+        ],
+        "pendientes_proceso": [],
+        "pendientes_grupo": []
+      },
+      "12": {
+        "bloqueadas": [],
+        "ignoradas": [
+          "SIGINT",
+          "SIGPIPE",
+          "SIGTERM",
+          "SIGXFSZ"
+        ],
+        "con_handler": [
+          "RT_33"
+        ],
+        "pendientes_proceso": [],
+        "pendientes_grupo": []
+      },
+      "13": {
+        "bloqueadas": [],
+        "ignoradas": [
+          "SIGINT",
+          "SIGPIPE",
+          "SIGTERM",
+          "SIGXFSZ"
+        ],
+        "con_handler": [],
+        "pendientes_proceso": [],
+        "pendientes_grupo": []
+      },
+      "15": {
+        "bloqueadas": [],
+        "ignoradas": [
+          "SIGINT",
+          "SIGPIPE",
+          "SIGTERM",
+          "SIGXFSZ"
+        ],
+        "con_handler": [],
+        "pendientes_proceso": [],
+        "pendientes_grupo": []
+      },
+      "17": {
+        "bloqueadas": [],
+        "ignoradas": [
+          "SIGINT",
+          "SIGPIPE",
+          "SIGTERM",
+          "SIGXFSZ"
+        ],
+        "con_handler": [],
+        "pendientes_proceso": [],
+        "pendientes_grupo": []
+      },
+      "21": {
+        "bloqueadas": [],
+        "ignoradas": [
+          "SIGINT",
+          "SIGPIPE",
+          "SIGTERM",
+          "SIGXFSZ"
+        ],
+        "con_handler": [],
+        "pendientes_proceso": [],
+        "pendientes_grupo": []
+      },
+      "26": {
+        "bloqueadas": [],
+        "ignoradas": [
+          "SIGINT",
+          "SIGPIPE",
+          "SIGTERM",
+          "SIGXFSZ"
+        ],
+        "con_handler": [],
+        "pendientes_proceso": [],
+        "pendientes_grupo": []
+      },
+      "31": {
+        "bloqueadas": [],
+        "ignoradas": [
+          "SIGINT",
+          "SIGPIPE",
+          "SIGTERM",
+          "SIGXFSZ"
+        ],
+        "con_handler": [],
+        "pendientes_proceso": [],
+        "pendientes_grupo": []
+      },
+      "33": {
+        "bloqueadas": [],
+        "ignoradas": [
+          "SIGINT",
+          "SIGPIPE",
+          "SIGTERM",
+          "SIGXFSZ"
+        ],
+        "con_handler": [],
+        "pendientes_proceso": [],
+        "pendientes_grupo": []
+      }
+    },
+    "ts": 1785814296.4207983
+  },
+  "scheduling": {
+    "data": {
+      "1": {
+        "nice": 0,
+        "priority": 20,
+        "policy": "OTHER",
+        "rt_priority": 0,
+        "affinity": "0-7",
+        "vol_ctx": 2779,
+        "nonvol_ctx": 26,
+        "utime": 46,
+        "stime": 14,
+        "sid": 1,
+        "pgid": 1
+      },
+      "7": {
+        "nice": 0,
+        "priority": 20,
+        "policy": "OTHER",
+        "rt_priority": 0,
+        "affinity": "0-7",
+        "vol_ctx": 113,
+        "nonvol_ctx": 0,
+        "utime": 18,
+        "stime": 5,
+        "sid": 1,
+        "pgid": 1
+      },
+      "12": {
+        "nice": 0,
+        "priority": 20,
+        "policy": "OTHER",
+        "rt_priority": 0,
+        "affinity": "0-7",
+        "vol_ctx": 726,
+        "nonvol_ctx": 2,
+        "utime": 10,
+        "stime": 7,
+        "sid": 1,
+        "pgid": 1
+      },
+      "13": {
+        "nice": 0,
+        "priority": 20,
+        "policy": "OTHER",
+        "rt_priority": 0,
+        "affinity": "0-7",
+        "vol_ctx": 177,
+        "nonvol_ctx": 7,
+        "utime": 20,
+        "stime": 8,
+        "sid": 1,
+        "pgid": 1
+      },
+      "15": {
+        "nice": 0,
+        "priority": 20,
+        "policy": "OTHER",
+        "rt_priority": 0,
+        "affinity": "0-7",
+        "vol_ctx": 127,
+        "nonvol_ctx": 21,
+        "utime": 43,
+        "stime": 42,
+        "sid": 1,
+        "pgid": 1
+      },
+      "17": {
+        "nice": 0,
+        "priority": 20,
+        "policy": "OTHER",
+        "rt_priority": 0,
+        "affinity": "0-7",
+        "vol_ctx": 78,
+        "nonvol_ctx": 5,
+        "utime": 3,
+        "stime": 6,
+        "sid": 1,
+        "pgid": 1
+      },
+      "21": {
+        "nice": 0,
+        "priority": 20,
+        "policy": "OTHER",
+        "rt_priority": 0,
+        "affinity": "0-7",
+        "vol_ctx": 174,
+        "nonvol_ctx": 49,
+        "utime": 42,
+        "stime": 19,
+        "sid": 1,
+        "pgid": 1
+      },
+      "26": {
+        "nice": 0,
+        "priority": 20,
+        "policy": "OTHER",
+        "rt_priority": 0,
+        "affinity": "0-7",
+        "vol_ctx": 45,
+        "nonvol_ctx": 4,
+        "utime": 3,
+        "stime": 1,
+        "sid": 1,
+        "pgid": 1
+      },
+      "31": {
+        "nice": 0,
+        "priority": 20,
+        "policy": "OTHER",
+        "rt_priority": 0,
+        "affinity": "0-7",
+        "vol_ctx": 44,
+        "nonvol_ctx": 5,
+        "utime": 4,
+        "stime": 2,
+        "sid": 1,
+        "pgid": 1
+      },
+      "33": {
+        "nice": 0,
+        "priority": 20,
+        "policy": "OTHER",
+        "rt_priority": 0,
+        "affinity": "0-7",
+        "vol_ctx": 176,
+        "nonvol_ctx": 9,
+        "utime": 19,
+        "stime": 9,
+        "sid": 1,
+        "pgid": 1
+      }
+    },
+    "ts": 1785814296.4230516
+  },
+  "threads": {
+    "data": {
+      "1": {
+        "cantidad": 2,
+        "threads": [
+          {
+            "tid": 1,
+            "nombre": "python3",
+            "estado": "S",
+            "cpu_pct": 0.5,
+            "vol_ctx": 2779,
+            "nonvol_ctx": 26
+          },
+          {
+            "tid": 36,
+            "nombre": "python3",
+            "estado": "S",
+            "cpu_pct": 0.0,
+            "vol_ctx": 397,
+            "nonvol_ctx": 4
+          }
+        ]
+      },
+      "7": {
+        "cantidad": 11,
+        "threads": [
+          {
+            "tid": 7,
+            "nombre": "python3",
+            "estado": "S",
+            "cpu_pct": 0.0,
+            "vol_ctx": 113,
+            "nonvol_ctx": 0
+          },
+          {
+            "tid": 8,
+            "nombre": "python3",
+            "estado": "S",
+            "cpu_pct": 0.0,
+            "vol_ctx": 77,
+            "nonvol_ctx": 2
+          },
+          {
+            "tid": 32,
+            "nombre": "python3",
+            "estado": "S",
+            "cpu_pct": 0.0,
+            "vol_ctx": 57,
+            "nonvol_ctx": 0
+          },
+          {
+            "tid": 34,
+            "nombre": "python3",
+            "estado": "S",
+            "cpu_pct": 0.5,
+            "vol_ctx": 119,
+            "nonvol_ctx": 3
+          },
+          {
+            "tid": 37,
+            "nombre": "python3",
+            "estado": "S",
+            "cpu_pct": 0.0,
+            "vol_ctx": 33,
+            "nonvol_ctx": 1
+          },
+          {
+            "tid": 39,
+            "nombre": "python3",
+            "estado": "S",
+            "cpu_pct": 0.0,
+            "vol_ctx": 2144,
+            "nonvol_ctx": 18
+          },
+          {
+            "tid": 40,
+            "nombre": "python3",
+            "estado": "S",
+            "cpu_pct": 0.0,
+            "vol_ctx": 40,
+            "nonvol_ctx": 0
+          },
+          {
+            "tid": 41,
+            "nombre": "python3",
+            "estado": "S",
+            "cpu_pct": 0.0,
+            "vol_ctx": 118,
+            "nonvol_ctx": 3
+          },
+          {
+            "tid": 42,
+            "nombre": "python3",
+            "estado": "S",
+            "cpu_pct": 0.0,
+            "vol_ctx": 86,
+            "nonvol_ctx": 4
+          },
+          {
+            "tid": 43,
+            "nombre": "python3",
+            "estado": "S",
+            "cpu_pct": 0.0,
+            "vol_ctx": 115,
+            "nonvol_ctx": 2
+          },
+          {
+            "tid": 50,
+            "nombre": "python3",
+            "estado": "S",
+            "cpu_pct": 0.0,
+            "vol_ctx": 11,
+            "nonvol_ctx": 1
+          }
+        ]
+      },
+      "12": {
+        "cantidad": 8,
+        "threads": [
+          {
+            "tid": 12,
+            "nombre": "python3",
+            "estado": "S",
+            "cpu_pct": 0.0,
+            "vol_ctx": 726,
+            "nonvol_ctx": 2
+          },
+          {
+            "tid": 18,
+            "nombre": "python3",
+            "estado": "S",
+            "cpu_pct": 0.0,
+            "vol_ctx": 465,
+            "nonvol_ctx": 1
+          },
+          {
+            "tid": 19,
+            "nombre": "python3",
+            "estado": "S",
+            "cpu_pct": 0.0,
+            "vol_ctx": 495,
+            "nonvol_ctx": 0
+          },
+          {
+            "tid": 22,
+            "nombre": "python3",
+            "estado": "S",
+            "cpu_pct": 0.0,
+            "vol_ctx": 402,
+            "nonvol_ctx": 1
+          },
+          {
+            "tid": 24,
+            "nombre": "python3",
+            "estado": "S",
+            "cpu_pct": 0.0,
+            "vol_ctx": 348,
+            "nonvol_ctx": 1
+          },
+          {
+            "tid": 25,
+            "nombre": "python3",
+            "estado": "S",
+            "cpu_pct": 0.0,
+            "vol_ctx": 346,
+            "nonvol_ctx": 1
+          },
+          {
+            "tid": 27,
+            "nombre": "python3",
+            "estado": "S",
+            "cpu_pct": 0.0,
+            "vol_ctx": 314,
+            "nonvol_ctx": 0
+          },
+          {
+            "tid": 28,
+            "nombre": "python3",
+            "estado": "S",
+            "cpu_pct": 0.0,
+            "vol_ctx": 177,
+            "nonvol_ctx": 1
+          }
+        ]
+      },
+      "13": {
+        "cantidad": 1,
+        "threads": [
+          {
+            "tid": 13,
+            "nombre": "python3",
+            "estado": "S",
+            "cpu_pct": 0.0,
+            "vol_ctx": 180,
+            "nonvol_ctx": 7
+          }
+        ]
+      },
+      "15": {
+        "cantidad": 1,
+        "threads": [
+          {
+            "tid": 15,
+            "nombre": "python3",
+            "estado": "S",
+            "cpu_pct": 0.0,
+            "vol_ctx": 127,
+            "nonvol_ctx": 21
+          }
+        ]
+      },
+      "17": {
+        "cantidad": 1,
+        "threads": [
+          {
+            "tid": 17,
+            "nombre": "python3",
+            "estado": "S",
+            "cpu_pct": 0.0,
+            "vol_ctx": 78,
+            "nonvol_ctx": 5
+          }
+        ]
+      },
+      "21": {
+        "cantidad": 1,
+        "threads": [
+          {
+            "tid": 21,
+            "nombre": "python3",
+            "estado": "R",
+            "cpu_pct": 0.5,
+            "vol_ctx": 174,
+            "nonvol_ctx": 49
+          }
+        ]
+      },
+      "26": {
+        "cantidad": 1,
+        "threads": [
+          {
+            "tid": 26,
+            "nombre": "python3",
+            "estado": "S",
+            "cpu_pct": 0.0,
+            "vol_ctx": 45,
+            "nonvol_ctx": 4
+          }
+        ]
+      },
+      "31": {
+        "cantidad": 1,
+        "threads": [
+          {
+            "tid": 31,
+            "nombre": "python3",
+            "estado": "S",
+            "cpu_pct": 0.0,
+            "vol_ctx": 47,
+            "nonvol_ctx": 5
+          }
+        ]
+      },
+      "33": {
+        "cantidad": 1,
+        "threads": [
+          {
+            "tid": 33,
+            "nombre": "python3",
+            "estado": "R",
+            "cpu_pct": 0.0,
+            "vol_ctx": 176,
+            "nonvol_ctx": 9
+          }
+        ]
+      }
+    },
+    "ts": 1785814296.4297388
+  },
+  "memoria": {
+    "data": {
+      "1": {
+        "vm_size": 103008,
+        "vm_rss": 22856,
+        "vm_hwm": 22856,
+        "vm_data": 20576,
+        "vm_stk": 132,
+        "vm_exe": 4,
+        "vm_lib": 9276,
+        "vm_swap": 0,
+        "minflt": 7356,
+        "majflt": 0,
+        "segmentos": {
+          "text": 9272,
+          "data_heap": 19164,
+          "stack": 132,
+          "shared_libs": 8432,
+          "otros": 66012
+        }
+      },
+      "7": {
+        "vm_size": 765376,
+        "vm_rss": 16872,
+        "vm_hwm": 16872,
+        "vm_data": 94592,
+        "vm_stk": 132,
+        "vm_exe": 4,
+        "vm_lib": 9192,
+        "vm_swap": 0,
+        "minflt": 1079,
+        "majflt": 0,
+        "segmentos": {
+          "text": 9188,
+          "data_heap": 93200,
+          "stack": 132,
+          "shared_libs": 8340,
+          "otros": 654520
+        }
+      },
+      "12": {
+        "vm_size": 544472,
+        "vm_rss": 15888,
+        "vm_hwm": 15888,
+        "vm_data": 69592,
+        "vm_stk": 132,
+        "vm_exe": 4,
+        "vm_lib": 9276,
+        "vm_swap": 0,
+        "minflt": 832,
+        "majflt": 0,
+        "segmentos": {
+          "text": 9272,
+          "data_heap": 68180,
+          "stack": 132,
+          "shared_libs": 8432,
+          "otros": 458460
+        }
+      },
+      "13": {
+        "vm_size": 28236,
+        "vm_rss": 16408,
+        "vm_hwm": 16408,
+        "vm_data": 11212,
+        "vm_stk": 132,
+        "vm_exe": 4,
+        "vm_lib": 9276,
+        "vm_swap": 0,
+        "minflt": 881,
+        "majflt": 0,
+        "segmentos": {
+          "text": 9272,
+          "data_heap": 9800,
+          "stack": 132,
+          "shared_libs": 8432,
+          "otros": 604
+        }
+      },
+      "15": {
+        "vm_size": 29260,
+        "vm_rss": 15836,
+        "vm_hwm": 15836,
+        "vm_data": 12236,
+        "vm_stk": 132,
+        "vm_exe": 4,
+        "vm_lib": 9276,
+        "vm_swap": 0,
+        "minflt": 1035,
+        "majflt": 0,
+        "segmentos": {
+          "text": 9272,
+          "data_heap": 10824,
+          "stack": 132,
+          "shared_libs": 8432,
+          "otros": 604
+        }
+      },
+      "17": {
+        "vm_size": 29260,
+        "vm_rss": 15876,
+        "vm_hwm": 15876,
+        "vm_data": 12236,
+        "vm_stk": 132,
+        "vm_exe": 4,
+        "vm_lib": 9276,
+        "vm_swap": 0,
+        "minflt": 844,
+        "majflt": 0,
+        "segmentos": {
+          "text": 9272,
+          "data_heap": 10824,
+          "stack": 132,
+          "shared_libs": 8432,
+          "otros": 604
+        }
+      },
+      "21": {
+        "vm_size": 28236,
+        "vm_rss": 16156,
+        "vm_hwm": 16156,
+        "vm_data": 11212,
+        "vm_stk": 132,
+        "vm_exe": 4,
+        "vm_lib": 9276,
+        "vm_swap": 0,
+        "minflt": 872,
+        "majflt": 0,
+        "segmentos": {
+          "text": 9272,
+          "data_heap": 9800,
+          "stack": 132,
+          "shared_libs": 8432,
+          "otros": 604
+        }
+      },
+      "26": {
+        "vm_size": 28236,
+        "vm_rss": 15600,
+        "vm_hwm": 15600,
+        "vm_data": 11212,
+        "vm_stk": 132,
+        "vm_exe": 4,
+        "vm_lib": 9276,
+        "vm_swap": 0,
+        "minflt": 834,
+        "majflt": 0,
+        "segmentos": {
+          "text": 9272,
+          "data_heap": 9800,
+          "stack": 132,
+          "shared_libs": 8432,
+          "otros": 604
+        }
+      },
+      "31": {
+        "vm_size": 28236,
+        "vm_rss": 15652,
+        "vm_hwm": 15652,
+        "vm_data": 11212,
+        "vm_stk": 132,
+        "vm_exe": 4,
+        "vm_lib": 9276,
+        "vm_swap": 0,
+        "minflt": 848,
+        "majflt": 0,
+        "segmentos": {
+          "text": 9272,
+          "data_heap": 9800,
+          "stack": 132,
+          "shared_libs": 8432,
+          "otros": 604
+        }
+      },
+      "33": {
+        "vm_size": 28236,
+        "vm_rss": 16012,
+        "vm_hwm": 16012,
+        "vm_data": 11212,
+        "vm_stk": 132,
+        "vm_exe": 4,
+        "vm_lib": 9276,
+        "vm_swap": 0,
+        "minflt": 873,
+        "majflt": 0,
+        "segmentos": {
+          "text": 9272,
+          "data_heap": 9800,
+          "stack": 132,
+          "shared_libs": 8432,
+          "otros": 604
+        }
+      }
+    },
+    "ts": 1785814294.4347095
+  },
+  "sistema": {
+    "data": {
+      "cpu_pct": {
+        "user": 2.3,
+        "system": 2.4,
+        "idle": 95.4,
+        "iowait": 0.0
+      },
+      "loadavg": {
+        "load1": 1.14,
+        "load5": 1.14,
+        "load15": 1.13
+      },
+      "meminfo": {
+        "MemTotal": 18337940,
+        "MemFree": 3267792,
+        "MemAvailable": 12499784,
+        "Buffers": 5124,
+        "Cached": 9632404,
+        "SwapCached": 0,
+        "Active": 7173600,
+        "Inactive": 6684820,
+        "Active(anon)": 4548100,
+        "Inactive(anon)": 0,
+        "Active(file)": 2625500,
+        "Inactive(file)": 6684820,
+        "Unevictable": 5920,
+        "Mlocked": 5920,
+        "SwapTotal": 8388604,
+        "SwapFree": 8388604,
+        "Zswap": 0,
+        "Zswapped": 0,
+        "Dirty": 1488,
+        "Writeback": 0,
+        "AnonPages": 4227452,
+        "Mapped": 1305896,
+        "Shmem": 322248,
+        "KReclaimable": 273752,
+        "Slab": 567656,
+        "SReclaimable": 273752,
+        "SUnreclaim": 293904,
+        "KernelStack": 24868,
+        "PageTables": 82500,
+        "SecPageTables": 2948,
+        "NFS_Unstable": 0,
+        "Bounce": 0,
+        "WritebackTmp": 0,
+        "CommitLimit": 17557572,
+        "Committed_AS": 31221804,
+        "VmallocTotal": 34359738367,
+        "VmallocUsed": 123624,
+        "VmallocChunk": 0,
+        "Percpu": 9632,
+        "HardwareCorrupted": 0,
+        "AnonHugePages": 0,
+        "ShmemHugePages": 0,
+        "ShmemPmdMapped": 0,
+        "FileHugePages": 0,
+        "FilePmdMapped": 0,
+        "CmaTotal": 0,
+        "CmaFree": 0,
+        "Unaccepted": 0,
+        "Balloon": 0,
+        "HugePages_Total": 0,
+        "HugePages_Free": 0,
+        "HugePages_Rsvd": 0,
+        "HugePages_Surp": 0,
+        "Hugepagesize": 2048,
+        "Hugetlb": 0,
+        "DirectMap4k": 556052,
+        "DirectMap2M": 17207296,
+        "DirectMap1G": 2097152
+      },
+      "btime": 1785809276,
+      "uptime": {
+        "uptime": 5019.45,
+        "idle_total": 33815.23
+      },
+      "total_procesos": 10,
+      "por_estado": {
+        "S": 9,
+        "R": 1
+      },
+      "total_threads": 28,
+      "zombies": 0,
+      "top_cpu": [
+        [
+          1,
+          "python3",
+          0.5
+        ],
+        [
+          7,
+          "python3",
+          0.5
+        ],
+        [
+          15,
+          "python3",
+          0.5
+        ]
+      ],
+      "top_mem": [
+        [
+          1,
+          "python3",
+          22856
+        ],
+        [
+          7,
+          "python3",
+          16872
+        ],
+        [
+          13,
+          "python3",
+          16408
+        ]
+      ]
+    },
+    "ts": 1785814296.432784
+  }
+}

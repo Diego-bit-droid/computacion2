@@ -13,6 +13,8 @@ sincronización porque nadie más lo toca.
 import curses
 import time
 
+from analizadores.base import INTERVALOS_MINIMOS
+
 VISTAS = [
     ("resumen", "Resumen", ["1", "r"]),
     ("memoria", "Memoria", ["2", "m"]),
@@ -40,6 +42,13 @@ def _fmt_kb(kb):
     return f"{kb}K"
 
 
+def _fmt_btime(btime):
+    """btime de /proc/stat viene en segundos desde epoch: lo mostramos legible."""
+    if not btime:
+        return "-"
+    return time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(btime))
+
+
 class EstadoUI:
     def __init__(self, config):
         self.vista = "resumen"
@@ -47,13 +56,27 @@ class EstadoUI:
         self.pin_pid = None
         self.filtro_cmd = ""
         self.filtro_user = ""
-        self.orden = config.get("orden_default", "cpu")
+        self.orden = "cpu"
+        self.aplicar_defaults(config)
         self.modo_input = None  # None | "filtro_cmd" | "filtro_user"
         self.buffer_input = ""
         self.mensaje = ""
         self.mensaje_ts = 0
         self.mostrar_ayuda = False
         self.pids_visibles = []  # cache del último frame, para resolver Enter (pin)
+
+    def aplicar_defaults(self, config):
+        """
+        Vuelca los valores por defecto de config.json al estado de la UI.
+        Se llama al arrancar y otra vez cada vez que SIGHUP recarga el archivo,
+        que es lo que pide el enunciado ("recarga intervalos por vista Y
+        filtros default").
+        """
+        self.orden = config.get("orden_default", "cpu")
+        if self.orden not in ORDEN_CICLO:
+            self.orden = "cpu"
+        self.filtro_cmd = config.get("filtro_cmd_default", "") or ""
+        self.filtro_user = config.get("filtro_user_default", "") or ""
 
     def set_mensaje(self, txt):
         self.mensaje = txt
@@ -191,6 +214,7 @@ def _detalle_sistema(snap, pid, ancho):
     lineas = [
         f"CPU  user {cpu.get('user',0):>5.1f}%  system {cpu.get('system',0):>5.1f}%  idle {cpu.get('idle',0):>5.1f}%  iowait {cpu.get('iowait',0):>5.1f}%",
         f"Load average: {load.get('load1','-')}  {load.get('load5','-')}  {load.get('load15','-')}   Uptime: {uptime.get('uptime',0):.0f}s",
+        f"Boot time: {_fmt_btime(d.get('btime'))}",
         f"Memoria total {_fmt_kb(mem.get('MemTotal',0))}  libre {_fmt_kb(mem.get('MemFree',0))}  buffers {_fmt_kb(mem.get('Buffers',0))}  cache {_fmt_kb(mem.get('Cached',0))}  swap {_fmt_kb(mem.get('SwapTotal',0)-mem.get('SwapFree',0))}",
         f"Procesos: {d.get('total_procesos',0)}   Threads totales: {d.get('total_threads',0)}   Zombies: {d.get('zombies',0)}",
         f"Por estado: {d.get('por_estado',{})}",
@@ -227,15 +251,24 @@ AYUDA = [
 ]
 
 
-def correr(stdscr, snapshot, intervalos, verbose_val, shutdown_evt, config, repintar_evt):
+def correr(stdscr, snapshot, intervalos, verbose_val, shutdown_evt, config, repintar_evt,
+           cpu_quick, recargar_ui_evt):
     curses.curs_set(0)
     stdscr.nodelay(True)
     stdscr.timeout(200)
     ui = EstadoUI(config)
 
     while not shutdown_evt.is_set():
+        # SIGHUP releyó config.json: volvemos a aplicar orden y filtros default.
+        # `config` es el mismo objeto dict que actualiza senales._recargar_config
+        # (ambos corren en el proceso principal), así que ya trae los valores nuevos.
+        if recargar_ui_evt.is_set():
+            ui.aplicar_defaults(config)
+            ui.set_mensaje("SIGHUP: config.json recargado")
+            recargar_ui_evt.clear()
+
         try:
-            _frame(stdscr, snapshot, intervalos, verbose_val, ui)
+            _frame(stdscr, snapshot, intervalos, verbose_val, ui, cpu_quick)
         except curses.error:
             pass  # terminal muy chica en este instante; se recupera en el próximo frame
 
@@ -308,18 +341,31 @@ def _manejar_tecla(tecla, ui, intervalos, snapshot, shutdown_evt):
         ui.set_mensaje(f"Intervalo de '{ui.vista}': {val.value:.1f}s")
     elif tecla == "-":
         val = intervalos[ui.vista]
+        minimo = INTERVALOS_MINIMOS.get(ui.vista, 0.5)
         with val.get_lock():
-            val.value = max(0.1, round(val.value - 0.5, 2))
-        ui.set_mensaje(f"Intervalo de '{ui.vista}': {val.value:.1f}s")
+            nuevo = max(minimo, round(val.value - 0.5, 2))
+            topeado = nuevo == val.value
+            val.value = nuevo
+        if topeado:
+            ui.set_mensaje(f"'{ui.vista}' ya está en su mínimo ({minimo:.1f}s)")
+        else:
+            ui.set_mensaje(f"Intervalo de '{ui.vista}': {val.value:.1f}s")
     elif tecla == "q":
         shutdown_evt.set()
     elif tecla in ("h", "?"):
         ui.mostrar_ayuda = True
 
 
-def _frame(stdscr, snapshot, intervalos, verbose_val, ui):
+def _frame(stdscr, snapshot, intervalos, verbose_val, ui, cpu_quick):
     stdscr.erase()
     alto, ancho = stdscr.getmaxyx()
+
+    # Lectura directa del Array('d', 4) de memoria compartida que escribe el
+    # analizador Sistema: son 4 doubles, sin pickle ni RPC contra el proceso
+    # servidor del Manager. Por eso lo podemos leer en CADA frame (hasta 5
+    # veces por segundo) sin que se note, a diferencia del snapshot, que sólo
+    # tocamos para la lista y el panel de detalle.
+    cpu_u, cpu_s, cpu_i, cpu_w = cpu_quick[0], cpu_quick[1], cpu_quick[2], cpu_quick[3]
 
     resumen = snapshot.get("resumen", {}).get("data", {})
     items = _procesos_filtrados_ordenados(resumen, ui)
@@ -337,7 +383,9 @@ def _frame(stdscr, snapshot, intervalos, verbose_val, ui):
         filtros.append(f"cmd~{ui.filtro_cmd}")
     if ui.filtro_user:
         filtros.append(f"user~{ui.filtro_user}")
-    info = f"orden={ui.orden} {' '.join(filtros)}  verbose={'ON' if verbose_val.value else 'OFF'}  intervalo={intervalos[ui.vista].value:.1f}s"
+    info = (f"CPU u{cpu_u:.1f}% s{cpu_s:.1f}% i{cpu_i:.1f}% w{cpu_w:.1f}%  |  "
+            f"orden={ui.orden} {' '.join(filtros)}  verbose={'ON' if verbose_val.value else 'OFF'}  "
+            f"intervalo={intervalos[ui.vista].value:.1f}s (min {INTERVALOS_MINIMOS.get(ui.vista, 0.5):.1f}s)")
     stdscr.addnstr(1, 0, info[:ancho], ancho, curses.A_DIM)
 
     alto_lista = max(3, (alto - 6) // 2)
@@ -354,14 +402,19 @@ def _frame(stdscr, snapshot, intervalos, verbose_val, ui):
         except curses.error:
             pass
 
+    # OJO: en la última fila hay que dejar libre la última columna. Escribir en
+    # la esquina inferior derecha hace que curses intente scrollear y devuelva
+    # ERR, lo que abortaba el frame ANTES del refresh() de abajo: en una
+    # terminal de 80 columnas la pantalla no se repintaba nunca.
+    ancho_pie = max(0, ancho - 1)
     if ui.modo_input:
         prompt = f"{'Filtrar comando' if ui.modo_input=='filtro_cmd' else 'Filtrar usuario'}: {ui.buffer_input}_"
-        stdscr.addnstr(alto - 1, 0, prompt[:ancho], ancho, curses.A_REVERSE)
+        stdscr.addnstr(alto - 1, 0, prompt[:ancho_pie], ancho_pie, curses.A_REVERSE)
     elif time.time() - ui.mensaje_ts < 3 and ui.mensaje:
-        stdscr.addnstr(alto - 1, 0, ui.mensaje[:ancho], ancho, curses.A_REVERSE)
+        stdscr.addnstr(alto - 1, 0, ui.mensaje[:ancho_pie], ancho_pie, curses.A_REVERSE)
     else:
         pie = "1-7 vista | ↑↓ nav | Enter pin | / cmd | u user | c orden | +/- intervalo | q salir | h ayuda"
-        stdscr.addnstr(alto - 1, 0, pie[:ancho], ancho, curses.A_DIM)
+        stdscr.addnstr(alto - 1, 0, pie[:ancho_pie], ancho_pie, curses.A_DIM)
 
     if ui.mostrar_ayuda:
         _dibujar_ayuda(stdscr, alto, ancho)
