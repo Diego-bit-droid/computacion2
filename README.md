@@ -26,7 +26,7 @@
 | Componente | Estado |
 |------------|--------|
 | Bloque 0 | Pendiente |
-| Trabajo Práctico 1 | Pendiente |
+| Trabajo Práctico 1 | Listo |
 | Trabajo Práctico 2 | Pendiente |
 
 ---
