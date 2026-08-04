@@ -87,18 +87,6 @@ def procesar(contexto):
 
 
 def _recargar_config(contexto):
-    """
-    SIGHUP: relee config.json y aplica intervalos por vista Y filtros default,
-    que es lo que pide el enunciado.
-
-    Los intervalos van a los Value compartidos (los leen los analizadores en
-    otros procesos), topeados contra el mínimo de cada vista para que un
-    config.json mal armado no pueda hacer que la vista FDs corra cada 0.1s.
-    Los filtros/orden, en cambio, son estado de la UI: los dejamos en el mismo
-    dict `config` que ya tiene el Display (ambos viven en el proceso principal)
-    y avisamos con un Event para que los reaplique en el próximo frame, en vez
-    de tocar su estado desde este hilo.
-    """
     try:
         with open(contexto["config_path"]) as f:
             cfg = json.load(f)
