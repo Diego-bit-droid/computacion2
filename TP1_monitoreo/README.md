@@ -23,7 +23,7 @@ el acceso al kernel: todo el parseo de `/proc` está en `src/procfs.py`.
 
 ```bash
 # Todo junto, como pide el enunciado:
-docker compose up --build
+docker compose up --build ( correr y interactuar use docker compose run --rm monitor )
 
 # Durante el desarrollo, sin Docker (necesita Linux, por /proc):
 make dev
