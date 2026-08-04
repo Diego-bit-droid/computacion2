@@ -1,0 +1,16 @@
+services:
+  monitor:
+    build: .
+    container_name: tp1-monitor
+    tty: true        # necesario para que curses tenga una terminal real
+    stdin_open: true # necesario para que el teclado llegue al contenedor
+    # pid: host       # opcional: descomentar para ver los procesos del HOST
+                      # en vez de solamente los del propio contenedor. No
+                      # está activado por defecto porque expone /proc del
+                      # host completo dentro del contenedor.
+    volumes:
+      - ./data:/app/data   # dump_<timestamp>.json (SIGUSR1) y monitor.log quedan accesibles desde el host
+    environment:
+      - MONITOR_CONFIG=/app/config.json
+    working_dir: /app/data
+    entrypoint: ["python3", "/app/src/main.py"]
