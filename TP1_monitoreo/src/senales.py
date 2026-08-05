@@ -32,6 +32,15 @@ def instalar_handlers():
     global _pipe_r, _pipe_w
     _pipe_r, _pipe_w = os.pipe()
     os.set_blocking(_pipe_r, False)
+    # El extremo de ESCRITURA también tiene que ser no bloqueante, y esto es lo
+    # más importante del patrón: si el pipe se llenara (muchísimas señales
+    # seguidas sin que el hilo despachador alcance a drenarlo) y el fd fuera
+    # bloqueante, os.write() dejaría al proceso dormido DENTRO del handler de
+    # señal, que es exactamente el escenario que el self-pipe quiere evitar.
+    # Con O_NONBLOCK, en el peor caso write() falla con EAGAIN y perdemos una
+    # señal repetida (el except de abajo), que es un costo aceptable: nunca
+    # bloqueamos en contexto de señal.
+    os.set_blocking(_pipe_w, False)
 
     def _handler(signum, frame):
         try:
@@ -125,10 +134,16 @@ def _recargar_config(contexto):
         contexto["log"](f"SIGHUP: no se pudo recargar config.json ({e})")
         return
     intervalos = cfg.get("intervalos", {})
+    # base.py ya se defiende sola aplicando el piso en su loop, pero si dejamos
+    # el Value por debajo del mínimo la TUI mostraría un intervalo que no es el
+    # real (diría 0.2s mientras el analizador corre a 2s). Lo clampeamos acá
+    # para que lo que se ve en pantalla sea lo que efectivamente pasa.
+    from analizadores.base import INTERVALOS_MINIMOS
     for vista, val in contexto["intervalos"].items():
         if vista in intervalos:
+            piso = INTERVALOS_MINIMOS.get(vista, 0.5)
             with val.get_lock():
-                val.value = float(intervalos[vista])
+                val.value = max(piso, float(intervalos[vista]))
     _registrar(contexto, signal.SIGHUP, "config recargada")
     contexto["log"]("SIGHUP: configuración recargada desde config.json")
 

@@ -48,16 +48,10 @@ ORDEN_CICLO = ["cpu", "rss", "pid"]
 MAX_FILAS_LISTA = 15
 MIN_FILAS_LISTA = 3
 MIN_LINEAS_DETALLE = 3
-
-MIN_INTERVALO = {
-    "resumen": 0.5, "memoria": 1.0, "fds": 2.0, "threads": 0.5,
-    "senales": 1.0, "scheduling": 1.0, "sistema": 0.5,
-}
-
-# --- colores ---------------------------------------------------------------
-# Los pares se inicializan una sola vez en correr(); si la terminal no soporta
-# color (TERM=dumb, por ejemplo), _color() devuelve 0 y todo sigue funcionando
-# con los atributos monocromos de siempre.
+try:
+    from analizadores.base import INTERVALOS_MINIMOS as MIN_INTERVALO  # noqa: F811
+except ImportError:
+    pass  # display.py importado suelto (tests): se usa la tabla de arriba
 _HAY_COLOR = False
 C_TITULO, C_OK, C_ERROR, C_AVISO, C_DATO = 1, 2, 3, 4, 5
 
@@ -514,6 +508,12 @@ def _frame(stdscr, snapshot, intervalos, verbose_val, ui, cpu_quick, procesos, e
     sis = snapshot.get("sistema", {}).get("data", {}) or {}
 
     items = _procesos_filtrados_ordenados(resumen, ui)
+    # El clamp va ACÁ y no sólo dentro de _pid_seleccionado: esa función sale
+    # antes por el camino del pin (si hay un proceso pineado y sigue vivo,
+    # retorna sin tocar el cursor), así que con un pin activo KEY_DOWN crecía
+    # sin techo y _dibujar_lista terminaba con `inicio` más allá del final,
+    # dejando la lista dibujada vacía.
+    ui.cursor = max(0, min(ui.cursor, max(0, len(items) - 1)))
     pid_sel = _pid_seleccionado(items, ui)
     ui.pids_visibles = [p["pid"] for p in items]
 
