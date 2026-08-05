@@ -7,12 +7,10 @@ Referencias: proc(5), Clase 3 (anatomía de procesos), Clase 4 (fork/exec/wait, 
 """
 import os
 import re
-import time
 import pwd
 import grp
 
 CLK_TCK = os.sysconf("SC_CLK_TCK")  # jiffies por segundo, normalmente 100
-PAGE_SIZE = os.sysconf("SC_PAGE_SIZE")
 
 # --- helpers genéricos ------------------------------------------------------
 
@@ -29,10 +27,18 @@ def listar_pids():
 
 
 def _leer(path):
+    """
+    Lectura defensiva de /proc: un proceso puede morir entre que lo listamos y
+    que lo leemos (ESRCH), o podemos no tener permisos (EPERM/EACCES).
+    Capturamos OSError entero y no las tres excepciones puntuales: /proc
+    también puede devolver EINVAL o EIO en algunos archivos según el kernel, y
+    en todos esos casos la respuesta correcta es la misma ("no hay dato para
+    este proceso"), no romper el analizador.
+    """
     try:
         with open(path, "r") as f:
             return f.read()
-    except (FileNotFoundError, ProcessLookupError, PermissionError):
+    except OSError:
         return None
 
 
@@ -163,6 +169,17 @@ def gid_a_nombre(gid):
 
 # --- /proc/<pid>/maps -----------------------------------------------------------
 
+def _es_libreria(path):
+    """
+    ¿Este mapeo corresponde a una librería compartida?
+    Contemplamos el sufijo " (deleted)" que agrega el kernel cuando el archivo
+    fue reemplazado en disco mientras seguía mapeado (típico tras un upgrade
+    con procesos viejos todavía vivos): sin esto no matchean con endswith(".so").
+    """
+    limpio = path.replace(" (deleted)", "")
+    return limpio.endswith(".so") or ".so." in limpio
+
+
 def leer_maps_agrupado(pid):
     """
     Agrupa las líneas de /proc/<pid>/maps por tipo de segmento:
@@ -182,14 +199,19 @@ def leer_maps_agrupado(pid):
         except ValueError:
             continue
 
+        # OJO con el orden de las ramas: el segmento r-xp de una librería
+        # compartida (libc, por ejemplo) cumple TANTO "es ejecutable" como
+        # "es un .so". Si preguntáramos primero por los permisos, todo el
+        # código de las librerías caería en "text" y ese grupo dejaría de
+        # significar "el binario del proceso", que es lo que queremos mostrar.
         if "[stack" in path:
             grupos["stack"] += tam_kb
         elif "[heap]" in path:
             grupos["data_heap"] += tam_kb
+        elif _es_libreria(path):
+            grupos["shared_libs"] += tam_kb
         elif "x" in perms and path and not path.startswith("["):
             grupos["text"] += tam_kb
-        elif path.endswith(".so") or ".so." in path:
-            grupos["shared_libs"] += tam_kb
         elif "w" in perms and (path == "" or path.startswith("[")):
             grupos["data_heap"] += tam_kb
         else:
@@ -215,13 +237,22 @@ def _inferir_tipo_fd(destino):
     return "otro"
 
 
-def leer_fds(pid, limite=None):
-    """Lista descriptores de archivo abiertos: número, destino (readlink) y tipo inferido."""
+def leer_fds_con_total(pid, limite=None):
+    """
+    Devuelve (total_fds, lista_de_fds) recorriendo /proc/<pid>/fd UNA sola vez.
+
+    Listar ese directorio y hacer readlink de cada entrada es la operación más
+    cara de las 7 vistas (un proceso puede tener cientos de FDs abiertos), así
+    que no queremos pagar dos listdir del mismo directorio para saber el total
+    y para leer los primeros N. El total sale del len() de la lista completa;
+    `limite` sólo recorta cuántos readlink hacemos, que es la parte cara.
+    """
     base = f"/proc/{pid}/fd"
     try:
         nombres = os.listdir(base)
-    except (FileNotFoundError, PermissionError, ProcessLookupError):
-        return []
+    except OSError:
+        return 0, []
+    total = len(nombres)
     nombres.sort(key=lambda x: int(x) if x.isdigit() else 0)
     if limite is not None:
         nombres = nombres[:limite]
@@ -229,16 +260,21 @@ def leer_fds(pid, limite=None):
     for n in nombres:
         try:
             destino = os.readlink(f"{base}/{n}")
-        except (FileNotFoundError, PermissionError, OSError):
-            destino = "?"
+        except OSError:
+            destino = "?"  # el fd se cerró entre el listdir y el readlink
         resultado.append({"fd": n, "destino": destino, "tipo": _inferir_tipo_fd(destino)})
-    return resultado
+    return total, resultado
+
+
+def leer_fds(pid, limite=None):
+    """Lista descriptores de archivo abiertos: número, destino (readlink) y tipo inferido."""
+    return leer_fds_con_total(pid, limite=limite)[1]
 
 
 def contar_fds(pid):
     try:
         return len(os.listdir(f"/proc/{pid}/fd"))
-    except (FileNotFoundError, PermissionError, ProcessLookupError):
+    except OSError:
         return 0
 
 
@@ -247,7 +283,7 @@ def contar_fds(pid):
 def listar_tids(pid):
     try:
         return [int(t) for t in os.listdir(f"/proc/{pid}/task")]
-    except (FileNotFoundError, PermissionError, ProcessLookupError):
+    except OSError:
         return []
 
 
@@ -270,12 +306,29 @@ _NOMBRES_SENAL = {
 }
 
 
+def _nombre_senal(num):
+    """
+    Nombre legible de una señal. Las 1..31 son las clásicas de POSIX; de la 32
+    en adelante son de tiempo real, pero en Linux con NPTL glibc se reserva la
+    32 y la 33 para el runtime de threads, así que SIGRTMIN "visible" arranca
+    en la 34. Por eso no alcanza con f"RT_{num}": hay que numerarlas relativas
+    a 34 para que coincidan con lo que muestran `kill -l` y htop.
+    """
+    if num in _NOMBRES_SENAL:
+        return _NOMBRES_SENAL[num]
+    if num in (32, 33):
+        return f"SIG{num}(glibc)"
+    if num >= 34:
+        return "SIGRTMIN" if num == 34 else f"SIGRTMIN+{num - 34}"
+    return f"SIG{num}"
+
+
 def decodificar_mascara_senales(mascara_hex):
     """Convierte una máscara de 64 bits (int) en la lista de nombres de señales activas (bit i = señal i+1)."""
     nombres = []
     for bit in range(1, 65):
         if mascara_hex & (1 << (bit - 1)):
-            nombres.append(_NOMBRES_SENAL.get(bit, f"RT_{bit}"))
+            nombres.append(_nombre_senal(bit))
     return nombres
 
 

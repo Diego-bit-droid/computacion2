@@ -12,7 +12,6 @@ importa el estado actual del sistema, no un historial de listas de PIDs).
 """
 import queue
 import signal
-import time
 import procfs
 
 

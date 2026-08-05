@@ -36,7 +36,7 @@ import senales
 from analizadores import resumen, memoria, fds, threads as vt_threads
 from analizadores import senales as an_senales
 from analizadores import scheduling, sistema
-
+from analizadores.base import INTERVALOS_MINIMOS
 VISTAS = ["resumen", "memoria", "fds", "threads", "senales", "scheduling", "sistema"]
 
 MODULOS = {
@@ -91,7 +91,8 @@ def main():
     snapshot = manager.dict()
 
     colas = {v: mp.Queue(maxsize=1) for v in VISTAS}
-    intervalos = {v: mp.Value("d", float(defaults.get(v, 2.0))) for v in VISTAS}
+    intervalos = {v: mp.Value("d", max(INTERVALOS_MINIMOS.get(v, 0.5),
+                                   float(defaults.get(v, 2.0)))) for v in VISTAS}
     verbose_val = mp.Value("b", 0)
     shutdown_evt = mp.Event()
     repintar_evt = mp.Event()
@@ -164,8 +165,15 @@ def main():
             p.join(timeout=3)
         for p in procesos:
             if p.is_alive():
-                log_a_archivo(f"{p.name} no terminó a tiempo, forzando terminate()")
-                p.terminate()
+                # OJO: acá NO sirve p.terminate(), que manda SIGTERM, porque
+                # los hijos hacen signal.signal(SIGTERM, SIG_IGN) justamente
+                # para que un Ctrl+C en la terminal no les llegue de forma
+                # descoordinada (comparten grupo de proceso con el padre).
+                # Como ya les pedimos el shutdown por shutdown_evt y no
+                # respondieron en 3s, el único recurso que queda es SIGKILL,
+                # que no se puede ignorar ni capturar.
+                log_a_archivo(f"{p.name} no terminó a tiempo, forzando kill()")
+                p.kill()
                 p.join(timeout=1)
         manager.shutdown()
         log_a_archivo("Monitor detenido limpiamente.")
