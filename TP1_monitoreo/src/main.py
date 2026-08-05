@@ -10,6 +10,15 @@ servidor: ese proceso es, en la práctica, el "Agregador" que pide el
 enunciado — es quien centraliza el acceso al snapshot compartido y serializa
 las escrituras concurrentes de los 7 analizadores (podés verlo corriendo con
 `ps -ef` dentro del contenedor mientras el monitor está andando).
+
+Al Display le pasamos tres cosas más allá del snapshot:
+  - cpu_quick: el Array('d', 4) de memoria compartida real, que lee en cada
+    frame sin pagar una RPC al Manager (es la contraparte práctica de la
+    comparación Manager vs Array que argumentamos en el README).
+  - procesos: la lista de mp.Process hijos, para mostrar en pantalla el PID
+    real de cada analizador y si sigue vivo (demo de `kill -9 <analizador>`).
+  - estado_senal: dict común (mismo proceso que el hilo despachador) con la
+    última señal atendida, para verla en la TUI sin abrir monitor.log.
 """
 import curses
 import json
@@ -24,7 +33,6 @@ sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import display
 import recolector
 import senales
-from analizadores.base import INTERVALOS_MINIMOS
 from analizadores import resumen, memoria, fds, threads as vt_threads
 from analizadores import senales as an_senales
 from analizadores import scheduling, sistema
@@ -83,15 +91,15 @@ def main():
     snapshot = manager.dict()
 
     colas = {v: mp.Queue(maxsize=1) for v in VISTAS}
-    # Los intervalos iniciales de config.json también se topean contra el mínimo
-    # de cada vista (tabla del enunciado), no sólo los que se ajustan con +/-.
-    intervalos = {v: mp.Value("d", max(INTERVALOS_MINIMOS.get(v, 0.5),
-                                       float(defaults.get(v, 2.0)))) for v in VISTAS}
+    intervalos = {v: mp.Value("d", float(defaults.get(v, 2.0))) for v in VISTAS}
     verbose_val = mp.Value("b", 0)
     shutdown_evt = mp.Event()
     repintar_evt = mp.Event()
-    recargar_ui_evt = mp.Event()
     cpu_quick = mp.Array("d", [0.0, 0.0, 0.0, 0.0])
+
+    # Dict común (no primitiva de IPC): sólo lo tocan el hilo despachador de
+    # señales y el Display, que corren en ESTE proceso.
+    estado_senal = {"nombre": None, "detalle": "", "ts": 0.0}
 
     procesos = []
     procesos.append(mp.Process(
@@ -122,18 +130,31 @@ def main():
         "snapshot": snapshot,
         "config_path": CONFIG_PATH,
         "repintar_evt": repintar_evt,
-        "recargar_ui_evt": recargar_ui_evt,
-        "config": cfg,               # mismo objeto que ve el Display: SIGHUP lo actualiza in place
-        "intervalos_minimos": INTERVALOS_MINIMOS,
+        "estado_senal": estado_senal,
         "log": log_a_archivo,
     }
 
     t_senales = threading.Thread(target=hilo_senales, args=(contexto,), daemon=True)
     t_senales.start()
 
+    # Mapa PID -> rol, para que la lista no muestre 10 filas idénticas de
+    # 'python3 src/main.py' (son todos forks del mismo intérprete).
+    # manager._process es el proceso servidor que levanta multiprocessing.Manager:
+    # es "privado" en la API, pero es exactamente el proceso que hace de Agregador
+    # y queremos poder señalarlo en pantalla. Si en alguna versión de Python
+    # cambiara, el except deja el resto funcionando igual.
+    roles = {os.getpid(): "principal + display"}
     try:
-        curses.wrapper(display.correr, snapshot, intervalos, verbose_val, shutdown_evt, cfg,
-                       repintar_evt, cpu_quick, recargar_ui_evt)
+        roles[manager._process.pid] = "manager = AGREGADOR"
+    except AttributeError:
+        log_a_archivo("No se pudo obtener el PID del proceso del Manager")
+    for p in procesos:
+        roles[p.pid] = p.name
+    log_a_archivo("Roles: " + ", ".join(f"{k}={v}" for k, v in sorted(roles.items())))
+
+    try:
+        curses.wrapper(display.correr, snapshot, intervalos, verbose_val, shutdown_evt,
+                       cfg, repintar_evt, cpu_quick, procesos, estado_senal, roles)
     except Exception as e:
         log_a_archivo(f"Display terminó con excepción: {e!r}")
     finally:
