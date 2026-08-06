@@ -34,8 +34,8 @@
 ## Organización
 
 - `bloque_0/`: ejercicios correspondientes al bloque autónomo.
-- `tp1/`: desarrollo del Trabajo Práctico 1.
-- `tp2/`: desarrollo del Trabajo Práctico 2.
+- `TP1_monitoreo/`: desarrollo del Trabajo Práctico 1.
+- `TP2_ /`: desarrollo del Trabajo Práctico 2.
 
 ---
 
