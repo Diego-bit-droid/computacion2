@@ -10,3 +10,11 @@ _pycache_/
 
 # OS
 .DS_Store
+# TP2: volcados de estado generados al apagar
+TP2_tareas/data/estado_*.json
+TP2_tareas/data/*.tmp
+.pytest_cache/
+__pycache__/
+
+# Material de la cátedra (es otro repo, no se sube acá)
+compu2_um_2026/
