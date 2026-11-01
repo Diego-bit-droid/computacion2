@@ -1,0 +1,29 @@
+services:
+  api:
+    build: .
+    container_name: tp2-tareas
+    ports:
+      - "8000:8000"
+    environment:
+      - WORKERS=${WORKERS:-4}
+      - PROCESOS_CPU=${PROCESOS_CPU:-2}
+      - COLA_MAX=${COLA_MAX:-1000}
+      - TIMEOUT_DEFECTO=60
+      - GRACIA_APAGADO=10
+      - DIR_ESTADO=/app/data
+    volumes:
+      - ./data:/app/data     # los estado_<ts>.json quedan en el host
+    # Más que GRACIA_APAGADO: si no, Docker manda SIGKILL antes de que
+    # terminemos de esperar a las tareas y de volcar el estado.
+    stop_grace_period: 20s
+    depends_on:
+      - lento
+
+  # Servidor de prueba con demoras conocidas, para las mediciones y para
+  # probar "descargar" sin depender de internet: http://lento:8001/demora/N
+  lento:
+    build: .
+    container_name: tp2-lento
+    command: ["python", "src/servidor_lento.py"]
+    ports:
+      - "8001:8001"
