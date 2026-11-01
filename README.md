@@ -15,7 +15,7 @@
 
  ─ bloque_0/      # Ejercicios del bloque autónomo
 ├── TP1_monitoreo/           # Trabajo Práctico 1
-├── TP2_tarea/           # Trabajo Práctico 2
+├── TP2_tareas/          # Trabajo Práctico 2
 └── README.md
 ```
 
@@ -27,7 +27,7 @@
 |------------|--------|
 | Bloque 0 | Pendiente |
 | Trabajo Práctico 1 | Listo |
-| Trabajo Práctico 2 | Pendiente |
+| Trabajo Práctico 2 | Listo |
 
 ---
 
@@ -35,7 +35,7 @@
 
 - `bloque_0/`: ejercicios correspondientes al bloque autónomo.
 - `TP1_monitoreo/`: desarrollo del Trabajo Práctico 1.
-- `TP2_tarea/`: desarrollo del Trabajo Práctico 2.
+- `TP2_tareas/`: desarrollo del Trabajo Práctico 2.
 
 ---
 
