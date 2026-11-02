@@ -421,4 +421,24 @@ procesos del executor (y los núcleos), no la cantidad de workers.
 
 ## Lo que aprendí
 
-_Pendiente: completar personalmente antes de entregar (2-3 párrafos)._
+Este trabajo me ayudó a ver la diferencia entre que un programa haga varias
+cosas "a la vez" y que realmente las haga en paralelo. Hasta ahora había
+trabajado con hilos y procesos por separado, pero acá tuve que elegir la
+herramienta según el tipo de trabajo. Cuando una tarea pasa la mayor parte del
+tiempo esperando, alcanza con un solo hilo bien organizado. Cuando tiene que
+calcular, hace falta otro proceso. Entender eso me cambió la forma de pensar un
+programa: ya no alcanza con que funcione, también importa qué está haciendo
+cada parte mientras espera.
+
+También aprendí que construir un sistema es distinto a resolver ejercicios
+sueltos. Cada pieza por separado era conocida, pero al juntarlas aparecieron
+problemas nuevos: qué pasa si se cancela algo a mitad de camino, qué pasa si
+una parte falla, cómo apagar todo sin perder información, qué hacer si llegan
+más pedidos de los que se pueden atender. Pensar en esos casos borde, y no sólo
+en el caso feliz, fue lo que más trabajo me llevó y lo que más me enseñó.
+
+Un ejemplo fue la cancelación: el worker tiene que distinguir si la
+cancelación es de una tarea o si es por el apagado. Mi primera idea fallaba si
+alguien cancelaba una tarea justo durante el apagado, así que la cambié por una
+marca en la tarea que pone el cliente al cancelar. Me quedó la idea de que los
+casos raros también hay que pensarlos.
