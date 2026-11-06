@@ -13,9 +13,10 @@
 
 ## Estructura del repositorio
 
- ─ bloque_0/      # Ejercicios del bloque autónomo
-├── TP1_monitoreo/           # Trabajo Práctico 1
-├── TP2_tareas/          # Trabajo Práctico 2
+```
+├── bloque_0/        # Ejercicios del bloque autónomo
+├── TP1_monitoreo/   # Trabajo Práctico 1
+├── TP2_tareas/      # Trabajo Práctico 2
 └── README.md
 ```
 
@@ -36,6 +37,12 @@
 - `bloque_0/`: ejercicios correspondientes al bloque autónomo.
 - `TP1_monitoreo/`: desarrollo del Trabajo Práctico 1.
 - `TP2_tareas/`: desarrollo del Trabajo Práctico 2.
+
+---
+
+## Uso de herramientas de IA
+
+Para redactar la documentación de los commits usé **Claude** como asistente. El código y las decisiones de implementación son de mi autoría.
 
 ---
 
